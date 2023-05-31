@@ -1,7 +1,7 @@
 # Comercio_Internacional
 Diplomado en Gestion de la Cadena de Suministros UCB
 Negocios
-ISOS
+
 - Maria Belen Franco Ovando <maria.franco.o@ucb.edu.bo>
 - Israel Ruiz Soliz <israelruiz92@gmail.com>
 - Santiago Flores <santi_1450@live.com>
