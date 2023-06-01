@@ -1,0 +1,142 @@
+---
+title: "Ventas_2019"
+author: "Ricardo R. Palma"
+date: "2023-06-01"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Tratamiento (Wranling) del dataset
+
+## Cargar datos
+
+```{r}
+library(readxl)
+Ventas_2019 <- read_excel("Ventas 2019.xlsx")
+
+```
+
+
+Columnas del dataset
+
+```{r}
+str(Ventas_2019)
+```
+
+Cantidad de filas
+
+```{r}
+tot_datos <- nrow(Ventas_2019)
+tot_datos
+```
+
+Utilizaremos el campo Cantidad como etiqueta para predecirlo con kNN
+
+
+¿Cuantos valores diferentes de "Cantidad" tenemos?
+
+```{r}
+print ("Etiquetas desordenadas")
+unique(Ventas_2019$Cantidad)
+print("Etiquetas ordenadas")
+Etiquetas <- sort(unique(Ventas_2019$Cantidad))
+Etiquetas
+
+```
+
+### Añadir etiquetas a una matriz de números
+
+como sabemos, para añadir filas o columnas de texto tenemos que crar un data frame.
+
+Creremos una matriz de números y una lista de textos para unirlas. Repetiremos esto con nuestro dataset.
+
+```{r}
+matriz <- matrix(1:9, nrow = 3 , byrow=TRUE)
+matriz
+```
+
+creamos una lista vacía
+
+```{r}
+emba <- list()
+```
+
+añadimos un valor a la lista
+
+```{r}
+emba[1] <- "Botella"
+```
+
+añadimos otra etiqueta
+
+```{r}
+emba[2] <- "Caja Cartón"
+```
+
+y finalmente otros más
+
+```{r}
+emba[3] <- "Pallet"
+```
+
+Vemos como quedó nuestra lista
+
+```{r}
+emba
+```
+
+
+Unimos la lista y la matriz mediante una columna. Podemos usar el comando $cbind()$ para hacer esto, pero tambien existe el comando $rbind()$ pero una mediante filas (rows).
+
+```{r}
+cbind(matriz,emba)
+```
+
+pero para poder trabajarlo como modelos y hacer que la columna emba sea de tipo factor (o variable categórica), tenemos que convertir todo en un data frame.
+
+```{r}
+marco_datos <- (cbind(matriz,emba))
+marco_datos
+```
+
+
+```{r}
+embalaje <- data.frame(tipo=character())
+for(i in 1:tot_datos){
+  
+  ifelse(Ventas_2019[i,5] <=12, embalaje[i,1] <- "Botellas",
+   ifelse(Ventas_2019[i,5]>=24, embalaje[i,1] <- "Pallet", embalaje[i,1] <-"Cajas")      
+  )  
+
+  
+
+  
+}
+
+# unique(embalaje)    
+print("Etiquetas generadas")  
+# write.csv2(embalaje,file="embalaje.csv", sep=";")
+```
+
+
+Uniremos en un nuevo dataset Ventas_2019 con las etiquetas (embalaje)
+
+
+```{r}
+## No soportado en maquinas con poca memoria
+Ventas_2019_Etiquetado <-cbind(Ventas_2019,embalaje)
+
+
+
+```
+
+
+Guardaremos en nuevo dataset con formato csv para recuperarlo y no tener problemas con el tipo de datos
+
+```{r}
+write.csv2(Ventas_2019_Etiquetado, file="Ventas_2019_Etiquetado.csv", sep=";")
+```
+
