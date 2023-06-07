@@ -1,0 +1,236 @@
+---
+title: "Duracion de las Baterias"
+author: "Maria Belen Franco Ovando,Israel Ruiz, Santiago Flores, Nadir Apaz"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Tarea: Comparacion de Baterias 75 con Baterias 1005 
+
+Datos recuperados de GibHub (web).
+
+## Datos de Baterias 75:
+
+```{r}
+datos_75 <- c(1 , 19 , 0,
+2 , 18 , 0,
+3 , 22 , 0,
+4 , 25 , 0,
+5 , 17 , 0,
+6 , 30 , 0,
+7 , 29 , 0,
+8 , 32 , 0,
+9 , 31 , 0,
+10, 33 , 0,
+11, 38 , 0,
+12, 36 , 0,
+13, 40 , 1,
+14, 40 , 0,
+15, 42 , 0,
+16, 45 , 0,
+17, 47 , 0,
+18, 49 , 0,
+19, 55 , 0,
+20, 58 , 1,
+21, 57 , 1,
+22, 63 , 1,
+23, 65 , 1,
+24, 65 , 1,
+25, 66 , 1)
+Muestra_75 <- matrix(datos_75, ncol = 3, byrow = TRUE)
+Muestra_75
+```
+
+## Datos de Baterias 1005:
+
+```{r}
+datos_1005 <- c(1 , 19 , 0,
+2 , 18 , 0,
+3 , 22 , 0,
+4 , 25 , 0,
+5 , 17 , 0,
+6 , 30 , 0,
+7 , 29 , 0,
+8 , 32 , 0,
+9 , 31 , 0,
+10, 33 , 0,
+11, 38 , 0,
+12, 36 , 0,
+13, 40 , 1,
+14, 40 , 0,
+15, 42 , 0,
+16, 45 , 0,
+17, 47 , 0,
+18, 49 , 0,
+19, 55 , 0,
+20, 58 , 1,
+21, 57 , 1,
+22, 63 , 1,
+23, 65 , 1,
+24, 65 , 1,
+25, 66 , 1,
+26, 69 , 1,
+27, 70 , 1,
+28, 71 , 1,
+29, 75 , 1,
+30, 86 , 1,
+31, 79 , 1,
+32, 88 , 1,
+33, 89 , 0,
+34, 92 , 1,
+35, 84, 1)
+Muestra_1005 <- matrix(datos_1005, ncol = 3, byrow = TRUE)
+Muestra_1005
+```
+
+# Valores maximos:
+
+Posicion del valor maximo de cada dato:
+```{r}
+which.max(Muestra_75[1:25,2])
+which.max(Muestra_1005[1:35,2])
+```
+Valores maximos:
+```{r}
+Muestra_75[25,2]
+Muestra_1005[34,2]
+```
+## Vida de las Baterias:
+
+Nos interesa conocer la vida en semanas de las baterias 1005. Sabemos que la vida util de las baterias es de 8 horas mientras se aplique una carga completa.
+
+```{r}
+plot((Muestra_75[ ,2]), main = "Vida en Semanas B75", xlab = "Ficha Taller Batería con falla", ylab = "Semanas", col = "green")
+plot((Muestra_1005[ ,2]), main = "Vida en Semanas B1005", xlab = "Ficha Taller Batería con falla", ylab = "Semanas", col = "blue")
+```
+Promedios de Vida:
+
+```{r}
+promedio_B75 <- mean(Muestra_75[ ,2])
+promedio_B75
+promedio_B1005 <- mean(Muestra_1005[ ,2])
+promedio_B1005
+```
+```{r}
+plot (sort(Muestra_75[ ,2]), main= "Vida en Semanas B75",xlab="Batería", ylab= "Semanas")
+abline(h=promedio_B75)
+abline(h=40,col="orange")
+abline(h=50,col="green")
+plot (sort(Muestra_1005[ ,2]), main= "Vida en Semanas B1005",xlab="Batería", ylab= "Semanas")
+abline(h=promedio_B1005)
+abline(h=50,col="red")
+abline(h=55,col="blue")
+```
+
+## Muestra de Historial de Carga:
+
+```{r}
+plot(Muestra_75[ , 1:2],main = "Resumen de Casos B75",xlab = "Ficha Bateria",ylab="Edad", type="b", col="green")
+plot(Muestra_1005[ , 1:2],main = "Resumen de Casos B1005",xlab = "Ficha Bateria",ylab="Edad", type="b", col="blue")
+```
+
+## Histogramas de Edades:
+
+```{r}
+hist(Muestra_75[ ,2], main = "Histograma de Edades B75", col = "green", border = "black")
+hist(Muestra_1005[ ,2], main = "Histograma de Edades B1005", col = "blue", border = "black")
+```
+
+## Diagrama de Cajas y Bigotes:
+
+```{r}
+boxplot(Muestra_75[ ,2], main = "Diagrama de Cajas y Bigotes B75")
+boxplot(Muestra_1005[ ,2], main = "Diagrama de Cajas y Bigotes B1005")
+```
+
+## Grafico de Densidad:
+
+```{r}
+density(Muestra_75[ ,2])
+density(Muestra_1005[ ,2])
+```
+
+```{r}
+plot(density(Muestra_75[ ,2]), main = "Densidad B75", xlab = "Edad", ylab = "Cantidad Relativa de Muestras")
+plot(density(Muestra_1005[ ,2]), main = "Densidad B1005", xlab = "Edad", ylab = "Cantidad Relativa de Muestras")
+```
+
+## Grafico de Densidad e Histograma:
+
+```{r}
+hist(Muestra_75[ ,2], breaks = 3, col="green",border="black", prob = TRUE,  xlab = "Edad", main = "Distribución Edades de la Muestra B75")
+lines(density(Muestra_75[ ,2]), lwd = 2, col = "chocolate3")
+
+hist(Muestra_1005[ ,2], breaks = 3, col="blue", border="black", prob = TRUE, xlab = "Edad", main = "Distribución Edades de la Muestra B1005")
+lines(density(Muestra_1005[ ,2]), lwd = 2, col = "chocolate3")
+```
+
+## Varianza Muestral:
+
+```{r}
+varianza_B75 <- var(Muestra_75[ ,2])
+varianza_B75
+varianza_B1005 <- var(Muestra_1005[ ,2])
+varianza_B1005
+```
+
+```{r}
+n_B75 <- length(Muestra_75[ ,2])
+n_B75
+n_B1005 <- length(Muestra_1005[ ,2])
+n_B1005
+```
+```{r}
+n_entre_n_1_B75 <- n_B75/(n_B75-1)
+n_entre_n_1_B75
+n_entre_n_1_B1005 <- n_B1005/(n_B1005-1)
+n_entre_n_1_B1005
+```
+
+## Varianza Poblacional:
+
+```{r}
+Varianza_P_B75 <- var(Muestra_75[ ,2]/n_B75)
+Varianza_P_B75
+Varianza_P_B1005 <- var(Muestra_1005[ ,2]/n_B1005)
+Varianza_P_B1005
+```
+
+## Desvio Estandar Muestral:
+
+```{r}
+dsm_B75 <- sd(Muestra_75[ ,2])
+dsm_B75
+dsm_B1005 <- sd(Muestra_1005[ ,2])
+dsm_B1005
+```
+
+## Desvio Estandar Poblacional:
+
+```{r}
+dsp_B75 <- sqrt(Varianza_P_B75)
+dsp_B75
+dsp_B1005 <- sqrt(Varianza_P_B1005)
+dsp_B1005
+```
+
+## Desvio Porcentual:
+
+```{r}
+dspp_B75 <- dsp_B75/n_B75
+dspp_B75
+dspp_B1005 <- dsp_B1005/n_B1005
+dspp_B1005
+```
+
+```{r}
+sprintf("Varianza muestral de B75 =%s, Varianza poblacional de B75 = %s, Desvio Porcentual de B75 = %s", varianza_B75, Varianza_P_B75, dspp_B75)
+sprintf("Varianza muestral de B1005 =%s, Varianza poblacional de B1005 = %s, Desvio Porcentual de B1005 = %s", varianza_B1005, Varianza_P_B1005, dspp_B1005)
+```
+
+
+
